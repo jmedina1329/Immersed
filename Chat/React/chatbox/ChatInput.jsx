@@ -5,14 +5,7 @@ import Styles from "../chat.module.css";
 
 import sendMessage from "./sendMessage";
 
-// import * as messageService from "../../../services/messageService";
-
-// import { sendMessage } from "@microsoft/signalr/dist/esm/Utils";
-
 function ChatInput({ chatData, currentZone }) {
-  // const senderData = props.chatData?.participants?.senderData;
-  // const recipientData = props.chatData?.participants?.recipientData;
-  // const chatName = props.chatData?.chatName;
 
   const [message, setMessage] = useState("");
 
@@ -29,26 +22,6 @@ function ChatInput({ chatData, currentZone }) {
     sendMessage(message, chatData, currentZone);
     setMessage("");
   };
-  // const onAddSuccess = (response) => {
-  //   _logger("Message post success", response);
-  // };
-  // const onAddError = (error) => {
-  //   _logger("Send failed", error);
-  //   toastr.error("Message send failed");
-  // };
-
-  // const getPostMessagePayload = (messageBody) => {
-  //   return {
-  //     message: messageBody,
-  //     subject: chatName,
-  //     recipientEntityTypeId: recipientData.entityTypeId,
-  //     recipientId: recipientData.id,
-  //     senderEntityTypeId: senderData.entityTypeId,
-  //     senderId: senderData.id,
-  //     zoneId: props.currentZone,
-  //     dateSent: new Date(),
-  //   };
-  // };
 
   return (
     <div className={Styles.chat_input}>
