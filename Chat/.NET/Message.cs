@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sabio.Models.Domain.Messages
-{
-    public class Message
+public class Message
     {
         public int Id { get; set; }
         public string MessageBody { get; set; }
@@ -18,4 +10,3 @@ namespace Sabio.Models.Domain.Messages
         public DateTime DateSent { get; set; }
         public DateTime DateRead { get; set; }
     }
-}
