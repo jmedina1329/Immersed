@@ -8,9 +8,7 @@ import * as traineeAccountsService from "services/traineeAccountsService";
 
 import toastr from "toastr";
 
-import debug from "sabio-debug";
 import zonesService from "services/zonesServices";
-const _logger = debug.extend("ChatParent");
 
 const zoneOptions = {
   userChatZone: 1,
