@@ -8,9 +8,6 @@ import { userSignupSchema } from "schemas/userFormSchema";
 import { Image } from "react-bootstrap";
 import userService from "services/userService";
 
-import logger from "sabio-debug";
-const _logger = logger.extend("SignUp");
-
 const SignUp = () => {
   const [formData] = useState({
     email: "",
