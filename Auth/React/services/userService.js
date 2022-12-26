@@ -1,13 +1,9 @@
 import axios from "axios";
 import * as helper from "./serviceHelpers";
-import sabioDebug from "sabio-debug";
 
 const endpoint = `${helper.API_HOST_PREFIX}/api/users`;
 
-const _logger = sabioDebug.extend("userService");
-
 const registerNewUser = (payload) => {
-  _logger("registerNewUser is executing", payload);
   const config = {
     method: "POST",
     data: payload,
@@ -22,7 +18,6 @@ const registerNewUser = (payload) => {
 };
 
 const loginUser = (payload) => {
-  _logger("loginUser is executing", payload);
   const config = {
     method: "POST",
     data: payload,
@@ -37,7 +32,6 @@ const loginUser = (payload) => {
 };
 
 const currentUser = () => {
-  _logger("currentUser is executing");
   const config = {
     method: "GET",
     url: `${endpoint}/current`,
@@ -49,7 +43,6 @@ const currentUser = () => {
 };
 
 const getUserById = (id) => {
-  _logger("getUserById executing", id);
   const config = {
     method: "GET",
     url: `${endpoint}/${id}`,
@@ -61,7 +54,6 @@ const getUserById = (id) => {
 };
 
 const logoutUser = () => {
-  _logger("logoutUser executing");
   const config = {
     method: "GET",
     url: `${endpoint}/logout`,
@@ -73,7 +65,6 @@ const logoutUser = () => {
 };
 
 const confirmUser = (token, email) => {
-  _logger("confirmUser executing", token, email);
   const config = {
     method: "PUT",
     url: `${endpoint}/confirm?token=${token}&email=${email}`,
@@ -124,7 +115,6 @@ const changeOrg = (orgId) => {
 };
 
 const getStatusTotals = () => {
-  _logger("getStatusTotals running");
   const config = {
     method: "GET",
     url: `${endpoint}/status/totals`,
@@ -136,7 +126,6 @@ const getStatusTotals = () => {
 };
 
 const getStatusOverTime = () => {
-  _logger("getStatusOverTime running");
   const config = {
     method: "GET",
     url: `${endpoint}/status/overTime`,
