@@ -26,9 +26,6 @@ import GoogleAnalyticsPlugin from "components/googleAnalytics/GoogleAnalyticsPlu
 import lookUpService from "services/lookUpService";
 import userService from "services/userService"
 import ReactGA from 'react-ga';
-import logger from "sabio-debug";
-
-const _logger = logger.extend("HeaderDefault");
 
 const HeaderDefault = (props) => {
   const user = props.currentUser;
