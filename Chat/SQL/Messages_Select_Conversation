@@ -1,0 +1,126 @@
+USE [Immersed]
+GO
+/****** Object:  StoredProcedure [dbo].[Messages_Select_ConversationV2]    Script Date: 12/26/2022 12:55:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author: <Joe Medina>
+-- Create date: <10/30/2022>
+-- Description: <Select Messages By Conversation>
+-- Code Reviewer: Jay Arenas
+
+-- MODIFIED BY: author
+-- MODIFIED DATE: <10/30/2022>
+-- Code Reviewer: Jay Arenas
+-- Note:
+-- =============================================
+ALTER proc [dbo].[Messages_Select_Conversation]
+	@ChatName nvarchar(100)
+
+AS
+
+/*
+
+DECLARE	@ChatName nvarchar(100) = 'S(E6-I7)_R(E1-I90)'
+
+EXECUTE dbo.Messages_Select_Conversation
+	@ChatName
+
+*/
+
+BEGIN
+
+	SELECT
+		m.[Id]
+		,m.[Message]
+		,m.[Subject]
+		,RecipientData = 
+			CASE 
+				WHEN m.RecipientEntityTypeId = 1
+					THEN	(
+							SELECT	u.Id
+									,m.RecipientEntityTypeId as EntityTypeId
+									,u.FirstName + ' ' + u.LastName AS Name
+									,u.AvatarUrl
+							FROM	dbo.Users as u
+							WHERE	u.Id = m.RecipientId
+							FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER
+							)
+				WHEN m.RecipientEntityTypeId = 3
+					THEN	(
+							SELECT	u.Id
+									,m.RecipientEntityTypeId as EntityTypeId
+									,u.FirstName + ' ' + u.LastName AS Name
+									,u.AvatarUrl
+							FROM	dbo.Trainees as t
+									INNER JOIN dbo.Users as u
+										ON t.UserId = u.Id
+							WHERE	t.Id = m.RecipientId
+							FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER
+							)
+				WHEN m.RecipientEntityTypeId = 6
+					THEN	(
+							SELECT	z.Id
+									,m.RecipientEntityTypeId as EntityTypeId
+									,z.Name
+									,z.ImageUrl as AvatarUrl
+							FROM	dbo.Zones as z
+							WHERE	z.Id = m.RecipientId
+							FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER
+							)
+			END
+		,SenderData =
+			CASE 
+				WHEN m.SenderEntityTypeId = 1
+					THEN	(
+							SELECT	u.Id
+									,m.SenderEntityTypeId as EntityTypeId
+									,u.FirstName + ' ' + u.LastName AS Name
+									,u.AvatarUrl
+							FROM	dbo.Users as u
+							WHERE	m.SenderId = u.Id
+							FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER
+							)
+				WHEN m.SenderEntityTypeId = 3
+					THEN	(
+							SELECT	ta.Id
+									,m.SenderEntityTypeId as EntityTypeId
+									,ta.Username as Name
+									,ta.AvatarUrl
+							FROM	dbo.TraineeAccounts AS ta
+							WHERE	ta.Id = m.SenderId
+							FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER
+							)
+				WHEN m.SenderEntityTypeId = 6
+					THEN	(
+							SELECT	z.Id
+									,m.SenderEntityTypeId as EntityTypeId
+									,z.Name
+									,z.ImageUrl as AvatarUrl
+							FROM	dbo.Zones as z
+							WHERE	z.Id = m.SenderId
+							FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER
+							)
+				WHEN m.SenderEntityTypeId = 9
+					THEN	(
+							SELECT	zg.Id
+									,m.SenderEntityTypeId as EntityTypeId
+									,zg.Name
+									,zg.ImageUrl as AvatarUrl
+							FROM	dbo.ZoneGroups as zg
+							WHERE	zg.Id = m.SenderId
+							FOR JSON AUTO, WITHOUT_ARRAY_WRAPPER
+							)
+			END
+		,m.[ZoneId]
+		,m.[IsDeleted]
+		,m.[DateSent]
+		,m.[DateRead]
+	FROM	dbo.Messages as m
+	WHERE	m.Subject = @ChatName
+			AND IsDeleted = 0
+	ORDER BY DateSent
+
+END
