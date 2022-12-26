@@ -6,13 +6,8 @@ import toastr from "toastr";
 import ChatBox from "./chatbox/ChatBox";
 import Message from "./chatbox/Message";
 
-// import Styles from "./chat.module.css";
-
 import * as messageService from "../../services/messageService";
 import { API_HOST_PREFIX } from "../../services/serviceHelpers";
-
-import debug from "sabio-debug";
-const _logger = debug.extend("Chat");
 
 const entityTypes = {
   users: 1,
