@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sabio.Models.Requests.Messages
-{
-    public class MessageAddRequest
+public class MessageAddRequest
     {
         [Required,MinLength(2), MaxLength(1000)]
         public string Message { get; set; }
@@ -29,4 +19,3 @@ namespace Sabio.Models.Requests.Messages
         [AllowNull]
         public DateTime? DateRead { get; set; }
     }
-}
